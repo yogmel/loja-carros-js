@@ -1,0 +1,85 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+header {
+    margin: 30px;
+}
+
+h1 {
+    text-align: center;
+}
+
+img {
+    width: 100%;
+    max-width: 170px;
+  }
+
+  form > div div {
+      margin-top: 20px;
+  }
+
+.container {
+    display: flex;
+    justify-content: space-around;
+}
+
+
+input#conteudo {
+    width: 100%;
+}
+
+  button[type="submit"] {
+    border: none;
+    border-radius: 7px;
+    padding: 10px 30px;
+    background-color: #FFE53B;
+    background-image: linear-gradient(147deg, #FFE53B 0%, #FF2525 74%);
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(0,0,0,.05);
+    transition: .8s all;
+  }
+
+  button[type="submit"]:hover {
+    box-shadow: 0px 10px 20px rgba(0,0,0,.1);
+    transform: translateY(-5px);
+    transition: .8s all;
+  }
+
+
+  table, thead, tbody, tr, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px;
+  }
+
+  thead {
+      background-color: #ccc;
+      color: white;
+      text-align: center;
+      font-weight: bold;
+  }
+
+
+  footer {
+      text-align: center;
+      background-color: #333;
+      color: white;
+  }
+  footer p {
+      max-width: 500px;
+      display: flex;
+      justify-content: space-around;
+      margin: 0 auto;
+      margin-top: 20px;
+      padding: 20px;
+  }
