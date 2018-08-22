@@ -1,24 +1,59 @@
 (function() {
   'use strict';
    //lib DOM
-   function DOM(str){this.element = document.querySelectorAll(str);}
+   function DOM(elements){
+    if(!(this instanceof DOM))
+      return new DOM(elements);
+    this.element = document.querySelectorAll(elements);
+    }
+
+    //métodos estáticos
+    DOM.isArray = function isArray(obj){
+      return transformType(obj) === '[object Array]';
+    }
+
+    DOM.isObject = function isObject(obj){
+      return transformType(obj) === '[object Object]';
+    }
+
+    DOM.isFunction = function isFunction(obj){
+      return transformType(obj) === '[object Function]';
+    }
+
+    DOM.isNumber = function isNumber(obj){
+      return transformType(obj) === '[object Number]';
+    }
+
+    DOM.isString = function isString(obj){
+      return transformType(obj) === '[object String]';
+    }
+
+    DOM.isBoolean = function isBoolean(obj){
+      return transformType(obj) === '[object Boolean]';
+    }
+
+    DOM.isNull = function isNull(obj){
+      return transformType(obj) === '[object Null]' || '[object Undefined]';
+    }
 
    DOM.prototype.on = function on (event, callback) {
-     Array.prototype.forEach.call( this.element, function(btn) {
-       btn.addEventListener(event, callback, false);
+     Array.prototype.forEach.call( this.element, function(element) {
+       element.addEventListener(event, callback, false);
      });
-   }
+   };
 
    DOM.prototype.off = function off () {
      Array.prototype.forEach.call( this.element, function(btn) {
        btn.removeEventListener(event, callback, false);
      });
-   }
+   };
 
-   DOM.prototype.get = function get () {
-       return this.element;
+   DOM.prototype.get = function get (index) {
+    //se nenhum índice for passado, retornar o elemento de índice 0
+    if(!index)
+      return this.element[0];
+    return this.element[index];
    }
- //fim das funções do challenge 26
 
    DOM.prototype.forEach = function forEach() {
      return Array.prototype.forEach.apply( this.element, arguments );
@@ -51,34 +86,6 @@
 
    function transformType(a){
      return Object.prototype.toString.call(a);
-   }
-
-   DOM.prototype.isArray = function isArray(obj){
-     return transformType(obj) === '[object Array]';
-   }
-
-   DOM.prototype.isObject = function isObject(obj){
-     return transformType(obj) === '[object Object]';
-   }
-
-   DOM.prototype.isFunction = function isFunction(obj){
-     return transformType(obj) === '[object Function]';
-   }
-
-   DOM.prototype.isNumber = function isNumber(obj){
-     return transformType(obj) === '[object Number]';
-   }
-
-   DOM.prototype.isString = function isString(obj){
-     return transformType(obj) === '[object String]';
-   }
-
-   DOM.prototype.isBoolean = function isBoolean(obj){
-     return transformType(obj) === '[object Boolean]';
-   }
-
-   DOM.prototype.isNull = function isNull(obj){
-     return transformType(obj) === '[object Null]' || '[object Undefined]';
    }
 
    window.DOM = DOM;

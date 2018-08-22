@@ -5,45 +5,55 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Challenge 29</title>
 
-  <style>
-    img {
-      width: 100%;
-      max-width: 170px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <form action="." method="POST">
-    <p>Imagem do carro: <input type="text" data-js="imgCarro" id="conteudo"></p>
-    <p>Marca / Modelo: <input type="text" data-js="modelo" id="conteudo"></p>
-    <p>Ano: <input type="text" data-js="ano" id="conteudo"></p>
-    <p>Placa: <input type="text" data-js="placa" id="conteudo"></p>
-    <p>Cor: <input type="text" data-js="cor" id="conteudo"></p>
+  <header>
+    <h1> <span data-js="company"></span> | <span data-js="telephone"></span> - Cadastro de Carros</h1>
+  </header>
 
-    <p data-js="error" style="color:red;"></p>
+  <div class="container">
+    <form action="." method="POST" data-js="form-register">
+      <div>
+        <div>
+          <label for="img">Imagem do carro:</label> <input type="url" data-js="imageCar" id="conteudo">
+        </div>
+        <div>
+          <label for="img">Marca / Modelo: </label><input type="text" data-js="brand-model" id="conteudo">
+        </div>
+        <div>
+          <label for="img">Ano: </label><input type="text" data-js="year" id="conteudo">
+        </div>
+        <div>
+          <label for="img">Placa: </label><input type="text" data-js="plate" id="conteudo">
+        </div>
+        <div>
+          <label for="img">Cor: </label><input type="text" data-js="color" id="conteudo">
+        </div>
+      </div>
 
-    <input type="submit" data-js="cadastrar" value="Cadastrar">
-  </form>
+      <p data-js="error" style="color:red;"></p>
 
-  <table>
-    <thead>Carros</thead>
-    <tbody data-js="tableCars">
-      <tr>
-        <td>Imagem</td>
-        <td>Marca</td>
-        <td>Ano</td>
-        <td>Placa</td>
-        <td>Cor</td>
-      </tr>
-    </tbody>
-  </table>
+      <button type="submit" data-js="cadastrar">Cadastrar</button>
+    </form>
 
-  <footer>
-    <p><span data-js="company"></span><span data-js="telephone"></span></p>
-  </footer>
+    <table>
+      <thead>
+        <tr>
+          <th>Imagem do Carro</th>
+          <th>Marca</th>
+          <th>Ano</th>
+          <th>Placa</th>
+          <th>Cor</th>
+        </tr>
+      </thead>
+      <tbody data-js="tableCars">
+      </tbody>
+    </table>
+  </div>
 
   <script src="dom.js"></script>
-  <script src="challenge-29.js"></script>
+  <script src="cadastro-carro-2.js"></script>
 </body>
 </html>
