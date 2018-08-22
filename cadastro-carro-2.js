@@ -15,7 +15,25 @@
             handleSubmit: function handleSubmit(e) {
                 e.preventDefault();
                 var $tableCar = $('[data-js="tableCars"]').get();
-                $tableCar.appendChild(app.createNewCar());
+                var $tr = app.createNewCar();
+                $tableCar.appendChild($tr);
+                $('[data-js="form-register"]').get().reset();
+            },
+
+            createRemoveButton: function createRemoveButton(e) {
+                var $tdRemove = document.createElement('td');
+                var $buttonRemove = document.createElement('button');
+
+                $buttonRemove.setAttribute('data-js', 'removeBtn');
+                $buttonRemove.textContent = 'Remover';
+                $tdRemove.appendChild($buttonRemove);
+
+                e.appendChild($tdRemove);
+
+                $buttonRemove.addEventListener('click', function(){
+                    $('[data-js="tableCars"]').get().removeChild(e);
+                });
+
             },
 
             createNewCar: function createNewCar() {
@@ -28,7 +46,7 @@
                 var $tdYear = document.createElement('td');
                 var $tdPlate = document.createElement('td');
                 var $tdColor = document.createElement('td');
-
+                
                 //criar a imagem da primeira coluna
                 $image.setAttribute('src', $('[data-js="imageCar"]').get().value);
                 $tdImage.appendChild($image);
@@ -45,6 +63,8 @@
                 $tr.appendChild($tdYear);
                 $tr.appendChild($tdPlate);
                 $tr.appendChild($tdColor);
+
+                app.createRemoveButton($tr);
 
                 return $fragment.appendChild($tr);
             },
