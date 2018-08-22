@@ -1,120 +1,100 @@
-(function(DOM) {
-  'use strict';
+(function($){
 
-  function app(){
+  var app = (function(){
+      return {
+          init: function  init() {
+              console.log('app init');
+              this.companyInfo();
+              this.initEvents();
+          },
 
-    var $conteudo = new DOM('#conteudo');
-    var $cadastrar = new DOM('[data-js="cadastrar"]');
-    var $tableCars = new DOM('[data-js="tableCars"]');
-    var $error = new DOM('[data-js="error"]').get()[0];
+          initEvents: function initEvents() {
+              $('[data-js="form-register"]').on('submit', this.handleSubmit);
+          },
 
-    var tablerow;
+          handleSubmit: function handleSubmit(e) {
+              e.preventDefault();
+              var $tableCar = $('[data-js="tableCars"]').get();
+              var $tr = app.createNewCar();
+              $tableCar.appendChild($tr);
+              $('[data-js="form-register"]').get().reset();
+          },
 
-    var $removeBtn = new DOM('[data-js="removeBtn"]').get()[0];
+          createRemoveButton: function createRemoveButton(e) {
+              var $tdRemove = document.createElement('td');
+              var $buttonRemove = document.createElement('button');
 
-    $cadastrar.on('click', function(e){
-      e.preventDefault();
-      testValues();
-      
-      if ( testValues() ){
-        tablerow = $tableCars.get()[0].appendChild(document.createElement('tr'));
+              $buttonRemove.setAttribute('data-js', 'removeBtn');
+              $buttonRemove.textContent = 'Remover';
+              $tdRemove.appendChild($buttonRemove);
 
-        $conteudo.forEach(function(arg){
-          var row = tablerow.appendChild(document.createElement('td'));
-          if (arg.getAttribute('data-js') == 'imgCarro'){
-            var $img = row.appendChild(document.createElement('img'));
-            $img.setAttribute('src', arg.value);
-          } else {
-            row.textContent = arg.value;
+              e.appendChild($tdRemove);
+
+              $buttonRemove.addEventListener('click', function(){
+                  $('[data-js="tableCars"]').get().removeChild(e);
+              });
+
+          },
+
+          createNewCar: function createNewCar() {
+              //criar todos a linha da tabela com todos os dados do carro
+              var $fragment = document.createDocumentFragment();
+              var $tr = document.createElement('tr');
+              var $tdImage = document.createElement('td');
+              var $image = document.createElement('img');
+              var $tdBrand = document.createElement('td');
+              var $tdYear = document.createElement('td');
+              var $tdPlate = document.createElement('td');
+              var $tdColor = document.createElement('td');
+              
+              //criar a imagem da primeira coluna
+              $image.setAttribute('src', $('[data-js="imageCar"]').get().value);
+              $tdImage.appendChild($image);
+
+              //inserção de conteúdo dentro das colunas
+              $tdBrand.textContent = $('[data-js="brand-model"]').get().value;
+              $tdYear.textContent = $('[data-js="year"]').get().value;
+              $tdPlate.textContent = $('[data-js="plate"]').get().value;
+              $tdColor.textContent = $('[data-js="color"]').get().value;
+
+              //adicionar colunas dentro da linha
+              $tr.appendChild($tdImage);
+              $tr.appendChild($tdBrand);
+              $tr.appendChild($tdYear);
+              $tr.appendChild($tdPlate);
+              $tr.appendChild($tdColor);
+
+              app.createRemoveButton($tr);
+
+              return $fragment.appendChild($tr);
+          },
+
+          companyInfo: function companyInfo() {
+              //faz a conexão com o JSON
+              var ajax = new XMLHttpRequest();
+              ajax.open('GET', '/company.json', true);
+              ajax.send();
+              ajax.addEventListener('readystatechange', this.getCompanyInfo, false);
+          },
+
+          getCompanyInfo: function getCompanyInfo(){
+              //verifica se a conexão foi bem sucedida
+              if(!app.isReady.call(this)) 
+                  return;
+              //pega os dados e insere no HTML
+              var data = JSON.parse(this.responseText);
+              var $companyName = $('[data-js="company"]').get();
+              var $telephoneNumber = $('[data-js="telephone"]').get();
+              $companyName.textContent = data.name;
+              $telephoneNumber.textContent = data.phone;
+          },
+          
+          isReady: function isReady(){
+              return this.readyState == 4 && this.status === 200;
           }
-        });
+      };
+  })();
 
-        var $remove = tablerow.appendChild(document.createElement('td')).appendChild(document.createElement('button'));
-        $remove.setAttribute('data-js', 'removeBtn');
-        $remove.textContent = 'Remover';
-        deleteRow();
-        // sendToServer();
-      }
-
-//https://cdn-istoedinheiro-ssl.akamaized.net/wp-content/uploads/sites/17/2018/02/palio.jpg 
-
-      function testValues(){
-        // if ( !($conteudo.get()[0].value.match(/^(https?):.+(jpg|png|gif|svg)$/g)) ){
-        //   $error.textContent = 'Insira uma imagem válida';
-        //   return false;
-        // }
-        // if ( !($conteudo.get()[1].value) ){
-        //   $error.textContent = 'Insira uma marca';
-        //   return false;
-        // }
-        // if ( !($conteudo.get()[2].value.match(/\d{2,4}/g)) ){
-        //   $error.textContent = 'Insira um ano válido';
-        //   return false;
-        // }
-        // if ( !($conteudo.get()[3].value.match(/\w{3}-\d{4}/g)) ){
-        //   $error.textContent = 'Insira uma placa válida';
-        //   return false;
-        // }
-        // if ( !($conteudo.get()[4].value.match(/^[A-Za-z]+$/g)) ){
-        //   $error.textContent = 'Insira uma cor válida';
-        //   return false;
-        // }
-        return true;
-      }
-
-      /* conexão com servidor */
-      // function sendToServer(){
-      //   var post = new XMLHttpRequest();
-      //   post.open('POST', 'http://localhost:3000/car');
-      //   post.setRequestHeader(
-      //     'Content-Type',
-      //     'application/x-www-form-url-urlencoded'
-      //   );
-      //   post.send('image=teste');
-
-      //   post.onreadystatechange = function(){
-      //     if ( post.readyState === 4 ) {
-      //       console.log('enviado');
-      //     }
-      //   }
-      // };
-
-    });
-    
-    //verificar deleção de row
-    function deleteRow(){
-      var i = $tableCars.get()[0].childElementCount;
-      console.log(i);
-      var $removeBtn = new DOM('[data-js="removeBtn"]').get()[i-1];
-      console.log('remove btn = ', $removeBtn);
-      
-      $removeBtn.addEventListener('click', function(){
-        console.log('parentNode = ', this.parentNode.parentNode.parentNode);
-        var kill = this.parentNode.parentNode.parentNode.childNodes[i];
-        console.log('kill =', kill);
-        console.log(i);
-        this.parentNode.parentNode.parentNode.removeChild(kill);
-        i = i - 1;
-        console.log(i);
-      }, false);
-    }
-
-  }
-
-  var $company = new DOM('[data-js="company"]');
-  var $telephone = new DOM('[data-js="telephone"]');
-  var ajax = new XMLHttpRequest();
-  ajax.open('GET', 'company.json');
-  ajax.send();
-
-  ajax.addEventListener('readystatechange', function(){
-    if (ajax.readyState === 4 && ajax.status === 200){
-      var data = JSON.parse(ajax.responseText);
-      $company.get()[0].textContent = data.name;
-      $telephone.get()[0].textContent = data.phone;
-    }
-  });
-
-  app();
+  app.init();
 
 })(window.DOM);
