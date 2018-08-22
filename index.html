@@ -10,26 +10,26 @@
 <body>
 
   <header>
-    <h1>Cadastro de Carros</h1>
+    <h1> <span data-js="company"></span> | <span data-js="telephone"></span> - Cadastro de Carros</h1>
   </header>
 
   <div class="container">
-    <form action="." method="POST">
+    <form action="." method="POST" data-js="form-register">
       <div>
         <div>
-          <label for="img">Imagem do carro:</label> <input type="text" data-js="imgCarro" id="conteudo">
+          <label for="img">Imagem do carro:</label> <input type="url" data-js="imageCar" id="conteudo">
         </div>
         <div>
-          <label for="img">Marca / Modelo: </label><input type="text" data-js="modelo" id="conteudo">
+          <label for="img">Marca / Modelo: </label><input type="text" data-js="brand-model" id="conteudo">
         </div>
         <div>
-          <label for="img">Ano: </label><input type="text" data-js="ano" id="conteudo">
+          <label for="img">Ano: </label><input type="text" data-js="year" id="conteudo">
         </div>
         <div>
-          <label for="img">Placa: </label><input type="text" data-js="placa" id="conteudo">
+          <label for="img">Placa: </label><input type="text" data-js="plate" id="conteudo">
         </div>
         <div>
-          <label for="img">Cor: </label><input type="text" data-js="cor" id="conteudo">
+          <label for="img">Cor: </label><input type="text" data-js="color" id="conteudo">
         </div>
       </div>
 
@@ -41,11 +41,11 @@
     <table>
       <thead>
         <tr>
-          <td>Imagem do Carro</td>
-          <td>Marca</td>
-          <td>Ano</td>
-          <td>Placa</td>
-          <td>Cor</td>
+          <th>Imagem do Carro</th>
+          <th>Marca</th>
+          <th>Ano</th>
+          <th>Placa</th>
+          <th>Cor</th>
         </tr>
       </thead>
       <tbody data-js="tableCars">
@@ -53,11 +53,7 @@
     </table>
   </div>
 
-  <footer>
-    <p><span data-js="company"></span><span data-js="telephone"></span></p>
-  </footer>
-
   <script src="dom.js"></script>
-  <script src="cadastro-carro.js"></script>
+  <script src="cadastro-carro-2.js"></script>
 </body>
 </html>

@@ -33,17 +33,20 @@
         $remove.setAttribute('data-js', 'removeBtn');
         $remove.textContent = 'Remover';
         deleteRow();
+        // sendToServer();
       }
+
+//https://cdn-istoedinheiro-ssl.akamaized.net/wp-content/uploads/sites/17/2018/02/palio.jpg 
 
       function testValues(){
         // if ( !($conteudo.get()[0].value.match(/^(https?):.+(jpg|png|gif|svg)$/g)) ){
         //   $error.textContent = 'Insira uma imagem válida';
         //   return false;
         // }
-        if ( !($conteudo.get()[1].value) ){
-          $error.textContent = 'Insira uma marca';
-          return false;
-        }
+        // if ( !($conteudo.get()[1].value) ){
+        //   $error.textContent = 'Insira uma marca';
+        //   return false;
+        // }
         // if ( !($conteudo.get()[2].value.match(/\d{2,4}/g)) ){
         //   $error.textContent = 'Insira um ano válido';
         //   return false;
@@ -58,21 +61,43 @@
         // }
         return true;
       }
+
+      /* conexão com servidor */
+      // function sendToServer(){
+      //   var post = new XMLHttpRequest();
+      //   post.open('POST', 'http://localhost:3000/car');
+      //   post.setRequestHeader(
+      //     'Content-Type',
+      //     'application/x-www-form-url-urlencoded'
+      //   );
+      //   post.send('image=teste');
+
+      //   post.onreadystatechange = function(){
+      //     if ( post.readyState === 4 ) {
+      //       console.log('enviado');
+      //     }
+      //   }
+      // };
+
     });
     
     //verificar deleção de row
     function deleteRow(){
-      var $removeBtn = new DOM('[data-js="removeBtn"]').get();
-      console.log($removeBtn[0]);
       var i = $tableCars.get()[0].childElementCount;
-      $removeBtn[i-1].addEventListener('click', function(){
-        console.log(this.parentNode.parentNode.parentNode);
-        var kill = this.parentNode.parentNode.parentNode.childNodes[i-1];
-        console.log(kill);
+      console.log(i);
+      var $removeBtn = new DOM('[data-js="removeBtn"]').get()[i-1];
+      console.log('remove btn = ', $removeBtn);
+      
+      $removeBtn.addEventListener('click', function(){
+        console.log('parentNode = ', this.parentNode.parentNode.parentNode);
+        var kill = this.parentNode.parentNode.parentNode.childNodes[i];
+        console.log('kill =', kill);
+        console.log(i);
         this.parentNode.parentNode.parentNode.removeChild(kill);
+        i = i - 1;
+        console.log(i);
       }, false);
     }
-
 
   }
 
